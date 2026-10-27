@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`trend chart snapshot > provides a textual data alternative for the chart 1`] = `
+"<section class="card">
+  <h2 style="font-size: 1.1rem; margin-top: 0px;">Orders by day</h2>
+  <div style="height: 240px;">
+    <div><canvas role="img" aria-label="Orders by day">
+        <p></p>
+      </canvas></div>
+  </div>
+  <p class="muted">Illustrative mock data</p>
+  <details>
+    <summary>View chart data</summary>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Mon</th>
+            <td>12</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>"
+`;

@@ -1,0 +1,28 @@
+version: 0.2
+env:
+  shell: bash
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - npm --prefix admin ci
+  pre_build:
+    commands:
+      - npm --prefix admin run lint
+      - npm --prefix admin run typecheck
+      - npm --prefix admin test
+      - npm --prefix admin run build
+      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" | docker login --username AWS --password-stdin "$REPOSITORY_URI"
+  build:
+    commands:
+      - IMAGE_TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION:0:12}"
+      - docker build --tag "$REPOSITORY_URI:$IMAGE_TAG" --file admin/Dockerfile admin
+      - docker push "$REPOSITORY_URI:$IMAGE_TAG"
+      - export IMAGE_URI="$REPOSITORY_URI:$IMAGE_TAG"
+      - node infrastructure/scripts/render-task-definition.mjs > task-definition.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI" > imagedefinitions.json
+artifacts:
+  files:
+    - task-definition.json
+    - imagedefinitions.json

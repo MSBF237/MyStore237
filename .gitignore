@@ -1,2 +1,7 @@
 node_modules/
 .env
+.nuxt/
+.output/
+coverage/
+infrastructure/cdk.out/
+infrastructure/.cdk.staging/
